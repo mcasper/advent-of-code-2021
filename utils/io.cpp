@@ -22,6 +22,23 @@ std::vector<int> intListInput(std::string path)
     return result;
 }
 
+std::vector<std::string> stringListInput(std::string path)
+{
+    std::string content = inputFile(path);
+    std::vector<std::string> result;
+
+    size_t newline_index = 0;
+    std::string token;
+    while ((newline_index = content.find('\n')) != std::string::npos)
+    {
+        token = content.substr(0, newline_index);
+        result.push_back(token);
+        content.erase(0, newline_index + 1);
+    }
+
+    return result;
+}
+
 std::string inputFile(std::string path)
 {
     std::string content;
