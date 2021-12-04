@@ -55,3 +55,19 @@ std::string inputFile(std::string path)
 
     return content;
 }
+
+std::vector<std::string> split(std::string input, std::string separator)
+{
+    std::vector<std::string> result;
+
+    size_t separator_index = 0;
+    std::string token;
+    while ((separator_index = input.find(separator)) != std::string::npos)
+    {
+        token = input.substr(0, separator_index);
+        result.push_back(token);
+        input.erase(0, separator_index + 1);
+    }
+
+    return result;
+}
