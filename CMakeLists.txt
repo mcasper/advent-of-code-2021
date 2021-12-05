@@ -3,9 +3,15 @@ project(aoc C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(d1p1 day1/part1.cpp utils/io.cpp)
-add_executable(d1p2 day1/part2.cpp utils/io.cpp)
-add_executable(d2p1 day2/part1.cpp utils/io.cpp)
-add_executable(d2p2 day2/part2.cpp utils/io.cpp)
-add_executable(d3p1 day3/part1.cpp utils/io.cpp)
-add_executable(d3p2 day3/part2.cpp utils/io.cpp)
+set(SHARED_SRC utils/io.cpp)
+
+file(GLOB DAYS CONFIGURE_DEPENDS "day*")
+foreach(DAY_PATH ${DAYS})
+    get_filename_component(DAY "${DAY_PATH}" NAME)
+
+    file(GLOB PARTS CONFIGURE_DEPENDS "${DAY}/*.cpp")
+    foreach(PART_PATH ${PARTS})
+        get_filename_component(PART "${PART_PATH}" NAME_WLE)
+        add_executable("${DAY}${PART}" ${DAY}/${PART}.cpp ${SHARED_SRC})
+    endforeach(PART_PATH)
+endforeach(DAY_PATH)

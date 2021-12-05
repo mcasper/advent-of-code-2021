@@ -71,7 +71,6 @@ int main(int argc, char *argv[])
             most_common_bit_string.append("1");
         }
     }
-    std::cout << "most_common_bit_string " << most_common_bit_string << std::endl;
 
     std::string least_common_bit_string;
     for (auto bit : least_common_bits)
@@ -86,7 +85,6 @@ int main(int argc, char *argv[])
             least_common_bit_string.append("1");
         }
     }
-    std::cout << "least_common_bit_string " << least_common_bit_string << std::endl;
 
     int result = binaryStringToInt(most_common_bit_string) * binaryStringToInt(least_common_bit_string);
     std::cout << "Result: " << result << std::endl;
