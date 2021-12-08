@@ -1,12 +1,11 @@
-#include <iostream>
+#include <string>
 #include <vector>
 
 #include "../utils/io.h"
 
-int main(int argc, char *argv[])
-{
+int _solve(std::string path) {
     int increased = 0;
-    std::vector<int> depths = intListInput("../day1/part1.txt");
+    std::vector<int> depths = intListInput(path);
     for (int i = 0; i < depths.size() - 1; i++)
     {
         if (depths[i + 1] > depths[i])
@@ -15,6 +14,21 @@ int main(int argc, char *argv[])
         }
     }
 
-    std::cout << "Result: " << increased << std::endl;
-    return 0;
+    return increased;
 }
+
+int solve() {
+    return _solve("../day1/part1.txt");
+}
+
+#ifdef MY_TEST
+
+#include <gtest/gtest.h>
+
+TEST(Day1Part1Test, Works) {
+    int expected = 7;
+    int actual = _solve("../day1/sample.txt");
+    EXPECT_EQ(expected, actual);
+}
+
+#endif

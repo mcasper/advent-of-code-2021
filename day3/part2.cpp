@@ -103,66 +103,28 @@ int findCo2Rating(std::vector<std::string> lines)
     return binaryStringToInt(lines[0]);
 }
 
-int main(int argc, char *argv[])
+int _solve(std::string path)
 {
-    std::vector<std::string> oxygenLines = stringListInput("../day3/part2.txt");
+    std::vector<std::string> oxygenLines = stringListInput(path);
     std::vector<std::string> co2Lines = oxygenLines;
     int oxygenRating = findOxygenRating(oxygenLines);
     int co2Rating = findCo2Rating(co2Lines);
 
-    std::cout << "Result: " << oxygenRating * co2Rating << std::endl;
+    return oxygenRating * co2Rating;
 }
 
-//     for (std::string line : lines)
-//     {
+int solve() {
+    return _solve("../day3/part2.txt");
+}
 
-//         int integer = binaryStringToInt(line);
-//         for (int i = 0; i < line.size(); i++)
-//         {
-//             int bit = (integer & (1 << i)) >> i;
-//             if (bit)
-//             {
-//                 most_common_bits[line.size() - i - 1] += 1;
-//                 least_common_bits[line.size() - i - 1] -= 1;
-//             }
-//             else
-//             {
-//                 most_common_bits[line.size() - i - 1] -= 1;
-//                 least_common_bits[line.size() - i - 1] += 1;
-//             }
-//         }
-//     }
+#ifdef MY_TEST
 
-//     std::string most_common_bit_string;
-//     for (auto bit : most_common_bits)
-//     {
-//         assert(bit != 0);
-//         if (bit < 0)
-//         {
-//             most_common_bit_string.append("0");
-//         }
-//         if (bit > 0)
-//         {
-//             most_common_bit_string.append("1");
-//         }
-//     }
-//     std::cout << "most_common_bit_string " << most_common_bit_string << std::endl;
+#include <gtest/gtest.h>
 
-//     std::string least_common_bit_string;
-//     for (auto bit : least_common_bits)
-//     {
-//         assert(bit != 0);
-//         if (bit < 0)
-//         {
-//             least_common_bit_string.append("0");
-//         }
-//         if (bit > 0)
-//         {
-//             least_common_bit_string.append("1");
-//         }
-//     }
-//     std::cout << "least_common_bit_string " << least_common_bit_string << std::endl;
+TEST(Day3Part2Test, Works) {
+    int expected = 230;
+    int actual = _solve("../day3/sample.txt");
+    EXPECT_EQ(expected, actual);
+}
 
-//     int result = binaryStringToInt(most_common_bit_string) * binaryStringToInt(least_common_bit_string);
-//     std::cout << "Result: " << result << std::endl;
-// }
+#endif

@@ -14,9 +14,9 @@ private:
     uint32_t magnitude;
 };
 
-int main(int argc, char *argv[])
+int _solve(std::string path)
 {
-    std::vector<std::string> lines = stringListInput("../day2/part1.txt");
+    std::vector<std::string> lines = stringListInput(path);
     uint32_t x = 0;
     int32_t y = 0;
     int32_t aim = 0;
@@ -51,6 +51,21 @@ int main(int argc, char *argv[])
         }
     }
 
-    std::cout << "Result: " << x*y << std::endl;
-    return 0;
+    return x*y;
 }
+
+int solve() {
+    return _solve("../day2/part2.txt");
+}
+
+#ifdef MY_TEST
+
+#include <gtest/gtest.h>
+
+TEST(Day2Part2Test, Works) {
+    int expected = 900;
+    int actual = _solve("../day2/sample.txt");
+    EXPECT_EQ(expected, actual);
+}
+
+#endif

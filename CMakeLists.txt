@@ -12,6 +12,31 @@ foreach(DAY_PATH ${DAYS})
     file(GLOB PARTS CONFIGURE_DEPENDS "${DAY}/*.cpp")
     foreach(PART_PATH ${PARTS})
         get_filename_component(PART "${PART_PATH}" NAME_WLE)
-        add_executable("${DAY}${PART}" ${DAY}/${PART}.cpp ${SHARED_SRC})
+        add_executable("${DAY}${PART}" main.cpp ${DAY}/${PART}.cpp ${SHARED_SRC})
+    endforeach(PART_PATH)
+endforeach(DAY_PATH)
+
+## Tests
+
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+include(GoogleTest)
+
+foreach(DAY_PATH ${DAYS})
+    get_filename_component(DAY "${DAY_PATH}" NAME)
+
+    file(GLOB PARTS CONFIGURE_DEPENDS "${DAY}/*.cpp")
+    foreach(PART_PATH ${PARTS})
+        get_filename_component(PART "${PART_PATH}" NAME_WLE)
+        add_executable("${DAY}${PART}_test" ${DAY}/${PART}.cpp ${SHARED_SRC})
+        target_compile_definitions("${DAY}${PART}_test" PUBLIC MY_TEST)
+        target_link_libraries("${DAY}${PART}_test" gtest_main)
+        gtest_discover_tests("${DAY}${PART}_test")
     endforeach(PART_PATH)
 endforeach(DAY_PATH)

@@ -17,9 +17,9 @@ int binaryStringToInt(std::string binary_string)
     return result;
 }
 
-int main(int argc, char *argv[])
+int _solve(std::string path)
 {
-    std::vector<std::string> lines = stringListInput("../day3/part1.txt");
+    std::vector<std::string> lines = stringListInput(path);
     std::vector<int> most_common_bits = {};
     std::vector<int> least_common_bits = {};
 
@@ -86,6 +86,21 @@ int main(int argc, char *argv[])
         }
     }
 
-    int result = binaryStringToInt(most_common_bit_string) * binaryStringToInt(least_common_bit_string);
-    std::cout << "Result: " << result << std::endl;
+    return binaryStringToInt(most_common_bit_string) * binaryStringToInt(least_common_bit_string);
 }
+
+int solve() {
+    return _solve("../day3/part1.txt");
+}
+
+#ifdef MY_TEST
+
+#include <gtest/gtest.h>
+
+TEST(Day3Part1Test, Works) {
+    int expected = 198;
+    int actual = _solve("../day3/sample.txt");
+    EXPECT_EQ(expected, actual);
+}
+
+#endif
