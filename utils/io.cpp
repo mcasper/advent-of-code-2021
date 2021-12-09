@@ -68,6 +68,7 @@ std::vector<std::string> split(std::string input, std::string separator)
         result.push_back(token);
         input.erase(0, separator_index + 1);
     }
+    result.push_back(input);
 
     return result;
 }
