@@ -66,7 +66,7 @@ std::vector<std::string> split(std::string input, std::string separator)
     {
         token = input.substr(0, separator_index);
         result.push_back(token);
-        input.erase(0, separator_index + 1);
+        input.erase(0, separator_index + separator.size());
     }
     result.push_back(input);
 

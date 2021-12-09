@@ -3,7 +3,7 @@ project(aoc C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(SHARED_SRC utils/io.cpp)
+set(SHARED_SRC utils/io.cpp utils/string_scanner.cpp)
 
 file(GLOB DAYS CONFIGURE_DEPENDS "day*")
 foreach(DAY_PATH ${DAYS})
@@ -40,3 +40,7 @@ foreach(DAY_PATH ${DAYS})
         gtest_discover_tests("${DAY}${PART}_test")
     endforeach(PART_PATH)
 endforeach(DAY_PATH)
+
+add_executable(utils_tests utils/string_scanner_tests.cpp utils/string_scanner.cpp utils/io.cpp utils/io_tests.cpp)
+target_link_libraries(utils_tests gtest_main)
+gtest_discover_tests(utils_tests)
