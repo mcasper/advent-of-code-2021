@@ -20,8 +20,35 @@ struct Line {
 class Graph {
 public:
     void recordLine(Point startingPoint, Point endingPoint) {
-        // Only consider vertical and horizontal lines
+        // Diagonal line
         if (startingPoint.x != endingPoint.x && startingPoint.y != endingPoint.y) {
+            std::function<int(int)> xStep;
+            std::function<int(int)> yStep;
+            if (startingPoint.x > endingPoint.x) {
+                xStep = [](int currentX) -> int { return currentX - 1; };
+            } else {
+                xStep = [](int currentX) -> int { return currentX + 1; };
+            }
+
+            if (startingPoint.y > endingPoint.y) {
+                yStep = [](int currentY) -> int { return currentY - 1; };
+            } else {
+                yStep = [](int currentY) -> int { return currentY + 1; };
+            }
+
+            int x = startingPoint.x;
+            int y = startingPoint.y;
+            incrementPoint(y, x);
+            bool done = false;
+            while (!done) {
+                x = xStep(x);
+                y = yStep(y);
+                incrementPoint(y, x);
+                if (x == endingPoint.x && y == endingPoint.y) {
+                    done = true;
+                }
+            }
+
             return;
         }
 
@@ -32,15 +59,7 @@ public:
             int x = startingPoint.x;
 
             for (int y = startingY; y <= endingY; y++) {
-                if (coordinates.find(y) == coordinates.end()) {
-                    coordinates[y] = std::map<int, int>();
-                }
-
-                if (coordinates[y].find(x) == coordinates[y].end()) {
-                    coordinates[y][x] = 0;
-                }
-
-                coordinates[y][x] = coordinates[y][x]+1;
+                incrementPoint(y, x);
             }
         }
 
@@ -62,6 +81,18 @@ public:
                 coordinates[y][x] = coordinates[y][x]+1;
             }
         }
+    }
+
+    void incrementPoint(int y, int x) {
+        if (coordinates.find(y) == coordinates.end()) {
+            coordinates[y] = std::map<int, int>();
+        }
+
+        if (coordinates[y].find(x) == coordinates[y].end()) {
+            coordinates[y][x] = 0;
+        }
+
+        coordinates[y][x] = coordinates[y][x]+1;
     }
 
     int numHighCollisionPoints() {
@@ -114,8 +145,8 @@ int solve() {
 
 #include <gtest/gtest.h>
 
-TEST(Day5Part1Test, Works) {
-    int expected = 5;
+TEST(Day5Part2Test, Works) {
+    int expected = 12;
     int actual = _solve("../day5/sample.txt");
     EXPECT_EQ(expected, actual);
 }
