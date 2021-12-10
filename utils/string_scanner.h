@@ -7,10 +7,10 @@ public:
     int parseInt();
     std::string parseCharacter(char);
     void consumeWhitespace();
+    bool eof();
 private:
     char peek();
     char take();
-    bool eof();
 
     std::string src;
     int cursor { 0 };
